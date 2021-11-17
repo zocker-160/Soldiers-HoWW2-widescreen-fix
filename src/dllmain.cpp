@@ -141,14 +141,11 @@ HRESULT Direct3DDevice8Wrapper::Reset(D3DPRESENT_PARAMETERS *pPresentationParame
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
     char path[MAX_PATH];
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
-    {
+    switch (ul_reason_for_call) {
+    case DLL_PROCESS_ATTACH: {
         CopyMemory(path + GetSystemDirectory(path, MAX_PATH - 9), "\\d3d8.dll", 10);
         d3d8.dll = LoadLibrary(path);
-        if (d3d8.dll == false)
-        {
+        if (d3d8.dll == false) {
             ExitProcess(0);
         }
 
@@ -179,16 +176,14 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         tData->fMaxHeight = static_cast<float>(GetPrivateProfileInt("Patches", "maxHeight", 1200, path));
         tData->fZoomStepBig = static_cast<float>(GetPrivateProfileInt("Patches", "zoomStep_big", 50, path));
         fFPSLimit = static_cast<float>(GetPrivateProfileInt("DX", "FPSLimit", 0, path));
-
         bForceWindowedMode = false; // does not work for SHoWWII
+
         if (fFPSLimit)
             bFPSLimit = true;
 
-        if (bDirect3D8DisableMaximizedWindowedModeShim)
-        {
+        if (bDirect3D8DisableMaximizedWindowedModeShim) {
             auto addr = (uintptr_t)GetProcAddress(d3d8.dll, "Direct3D8EnableMaximizedWindowedModeShim");
-            if (addr)
-            {
+            if (addr) {
                 DWORD Protect;
                 VirtualProtect((LPVOID)(addr + 6), 4, PAGE_EXECUTE_READWRITE, &Protect);
                 *(unsigned*)(addr + 6) = 0;
