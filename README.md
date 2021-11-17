@@ -1,2 +1,29 @@
-# Soldiers-HoWW2-widescreen-fix
-Widescreen and Resolution fix for Soldiers: Heroes of World War 2
+# Soldiers: Heroes of World War II widescreen fix
+Widescreen and Resolution fix for Soldiers: Heroes of World War 2.
+
+**It also fixes the famous `Texture or surface size is too big (esurface.cpp, 129)` error!**
+
+![THE error](images/ksnip_20211117-015937.png)
+
+## Installation
+
+Download zip from [releases](https://github.com/zocker-160/Soldiers-HoWW2-widescreen-fix/releases) and unpack the files inside next to the `Soldiers.exe`.
+
+## Supported Versions
+
+- GOG version `1.28.3E`
+    - `Soldiers.exe` SHA256 `c46dbef054fcfb9d0ee5df2145763e1a0ea3fcb684df4892f1e63c48a5b5d951`
+    
+## Known Limitations
+
+- when the patched `d3d8.dll` is in the game folder, the editor will crash
+
+## Showcase
+### Main Menu
+![main menu](images/Screenshot_20211117_020203.png)
+
+### Original Zoom
+![org zoom](images/Screenshot_20211117_020409.png)
+
+### Patched Zoom
+![patched zoom](images/Screenshot_20211117_020509.png)
