@@ -13,6 +13,10 @@ Widescreen and Resolution fix for Soldiers: Heroes of World War 2.
 
 ![exe props](images/ksnip_20211117-100339.png)
 
+**NOTE** if you don't set `Disable fullscreen optimizations` you will get this error
+
+![sucky error](images/ksnip_20211117-102516.png)
+
 ## Supported Versions
 
 - [Zoom-Platform](https://www.zoom-platform.com/product/soldiers-heroes-of-world-war-ii)[^1] `1.28.3E`
