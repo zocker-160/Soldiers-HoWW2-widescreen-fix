@@ -22,6 +22,6 @@ struct threadData {
 };
 
 const int version_maj = 1;
-const int version_min = 1;
+const int version_min = 2;
 
 DWORD WINAPI PatchThread(LPVOID param);

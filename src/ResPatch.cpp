@@ -61,6 +61,24 @@ DWORD* tracePointer(memoryPTR* patch) {
     return location;
 }
 
+void GetDesktopResolution(int& hor, int& vert) {
+    hor = GetSystemMetrics(SM_CXSCREEN);
+    vert = GetSystemMetrics(SM_CYSCREEN);
+}
+float calcAspectRatio(int horizontal, int vertical) {
+    if (horizontal != 0 && vertical != 0) {
+        return (float)horizontal / (float)vertical;
+    }
+    else {
+        return -1.0f;
+    }
+}
+float getAspectRatio() {
+    int horizontal, vertical;
+    GetDesktopResolution(horizontal, vertical);
+    return calcAspectRatio(horizontal, vertical);
+}
+
 /* other helper functions and stuff */
 void showMessage(float val) {
     std::cout << "DEBUG: " << val << "\n";
@@ -102,8 +120,10 @@ int MainEntry(threadData* tData) {
 
     showMessage(*textureLimit_p);
 
-    if (!tData->bCameraPatch)
+    if (!tData->bCameraPatch || getAspectRatio() < calcAspectRatio(16, 9)) {
+        showMessage("ignoring camera patch and exit");
         return 0;
+    }
 
     /* camera and zoom patch */
     float* minH = (float*)(calcAddress(CameraMinH));
