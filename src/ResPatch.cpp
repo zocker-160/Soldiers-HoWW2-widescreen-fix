@@ -113,10 +113,23 @@ int MainEntry(threadData* tData) {
     int* textureLimit_p = (int*)(calcAddress(TextureResolutionLimit));
 
     showMessage(*textureLimit_p);
-    if (*textureLimit_p == 2048)
-        writeBytes(textureLimit_p, &newResLimit, 4);
-    else
-        showMessage("Unexpected value - ResPatch skipped");
+
+    // wait until value can be written (fix for Steam version)
+    for (int i = 0; i < RETRY_COUNT; i++) {
+        if (*textureLimit_p != 2048) {
+            showMessage("Unexpected value - retrying...");
+            Sleep(200);
+            if (i - 1 == RETRY_COUNT) {
+                showMessage("Resolution limit could not be set - exiting");
+                return 0;
+            }
+
+        } else {
+            showMessage("Patching resolution limit...");
+            writeBytes(textureLimit_p, &newResLimit, 4);
+            break;
+        }
+    }
 
     showMessage(*textureLimit_p);
 

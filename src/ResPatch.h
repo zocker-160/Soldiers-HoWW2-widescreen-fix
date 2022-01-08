@@ -22,6 +22,8 @@ struct threadData {
 };
 
 const int version_maj = 1;
-const int version_min = 2;
+const int version_min = 3;
+
+const int RETRY_COUNT = 20;
 
 DWORD WINAPI PatchThread(LPVOID param);
