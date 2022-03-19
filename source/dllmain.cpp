@@ -140,11 +140,30 @@ HRESULT Direct3DDevice8Wrapper::Reset(D3DPRESENT_PARAMETERS *pPresentationParame
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
-    char path[MAX_PATH];
+    char iniPath[MAX_PATH];
+    char dllPath[MAX_PATH];
+
     switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH: {
-        CopyMemory(path + GetSystemDirectory(path, MAX_PATH - 9), "\\d3d8.dll", 10);
-        d3d8.dll = LoadLibrary(path);
+        HMODULE hm = NULL;
+        GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&Direct3DCreate8Callback, &hm);
+        GetModuleFileNameA(hm, iniPath, sizeof(iniPath));
+        *strrchr(iniPath, '\\') = '\0';
+        strcat_s(iniPath, "\\d3d8.ini");
+
+        if (GetPrivateProfileIntA("Compatibility", "dgvoodooCompat", 0, iniPath) != 0) {
+            strncpy(dllPath, iniPath, MAX_PATH);
+            *strrchr(dllPath, '\\') = '\0';
+            char dllName[32];
+            GetPrivateProfileStringA("Compatibility", "dgvoodooDLL", "d3d8.dll", dllName, 32, iniPath);
+            strcat_s(dllPath, dllName);
+        } else {
+            CopyMemory(dllPath + GetSystemDirectory(dllPath, MAX_PATH - 9), "\\d3d8.dll", 10);
+        }
+        
+        //MessageBoxA(NULL, dllPath, "Message from ZoomPatch by zocker_160", MB_OK);
+
+        d3d8.dll = LoadLibrary(dllPath);
         if (d3d8.dll == false) {
             ExitProcess(0);
         }
@@ -160,22 +179,16 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         d3d8.Direct3DCreate8 = (FARPROC)Direct3DCreate8Callback;
 
         //ini
-        char path[MAX_PATH];
-        HMODULE hm = NULL;
-        GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&Direct3DCreate8Callback, &hm);
-        GetModuleFileNameA(hm, path, sizeof(path));
-        *strrchr(path, '\\') = '\0';
-        strcat_s(path, "\\d3d8.ini");
 
         threadData* tData = new threadData();
-        bDirect3D8DisableMaximizedWindowedModeShim = GetPrivateProfileInt("DX", "Direct3D8DisableMaximizedWindowedModeShim", 0, path) != 0;
-        bResPatch = GetPrivateProfileInt("Patches", "ResolutionPatch", 1, path) != 0;
-        tData->bDebugMode = GetPrivateProfileInt("Patches", "DebugMode", 0, path) != 0;
-        tData->bCameraPatch = GetPrivateProfileInt("Patches", "CameraPath", 1, path) != 0;
-        tData->fMinHeight = static_cast<float>(GetPrivateProfileInt("Patches", "minHeight", 750, path));
-        tData->fMaxHeight = static_cast<float>(GetPrivateProfileInt("Patches", "maxHeight", 1200, path));
-        tData->fZoomStepBig = static_cast<float>(GetPrivateProfileInt("Patches", "zoomStep_big", 50, path));
-        fFPSLimit = static_cast<float>(GetPrivateProfileInt("DX", "FPSLimit", 0, path));
+        bDirect3D8DisableMaximizedWindowedModeShim = GetPrivateProfileInt("DX", "Direct3D8DisableMaximizedWindowedModeShim", 0, iniPath) != 0;
+        bResPatch = GetPrivateProfileIntA("Patches", "ResolutionPatch", 1, iniPath) != 0;
+        tData->bDebugMode = GetPrivateProfileIntA("Patches", "DebugMode", 0, iniPath) != 0;
+        tData->bCameraPatch = GetPrivateProfileIntA("Patches", "CameraPath", 1, iniPath) != 0;
+        tData->fMinHeight = static_cast<float>(GetPrivateProfileIntA("Patches", "minHeight", 750, iniPath));
+        tData->fMaxHeight = static_cast<float>(GetPrivateProfileIntA("Patches", "maxHeight", 1200, iniPath));
+        tData->fZoomStepBig = static_cast<float>(GetPrivateProfileIntA("Patches", "zoomStep_big", 50, iniPath));
+        fFPSLimit = static_cast<float>(GetPrivateProfileIntA("DX", "FPSLimit", 0, iniPath));
         bForceWindowedMode = false; // does not work for SHoWWII
 
         if (fFPSLimit)
