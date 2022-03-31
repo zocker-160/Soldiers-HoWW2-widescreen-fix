@@ -1,11 +1,12 @@
 /*
- * Widescreen patch for Soldiers: Heroes of World War 2 by zocker_160
+ * Widescreen patch for Soldiers: Heroes of World War II by zocker_160
  *
- * This source code is licensed under GPL-v3
+ * This source code is licensed under GPLv3
  *
  */
+
 #pragma once
-#include <Windows.h>
+#include "pch.h"
 
 struct memoryPTR {
     DWORD base_address;
@@ -22,7 +23,7 @@ struct threadData {
 };
 
 const int version_maj = 1;
-const int version_min = 4;
+const int version_min = 5;
 
 const int RETRY_COUNT = 20;
 
