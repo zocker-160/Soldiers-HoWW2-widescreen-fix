@@ -3,9 +3,13 @@ premake*
 
 *.zip
 *.dll
+*.asi
 *.exp
 *.pdb
 *.lib
 *.yml
 
+.vs/
 build/
+Release/
+source/SHOW*
