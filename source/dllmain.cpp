@@ -33,8 +33,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
         threadData* tData = new threadData();
         bResPatch = GetPrivateProfileIntA("Patches", "ResolutionPatch", 1, iniPath) != 0;
-        tData->bDebugMode = GetPrivateProfileIntA("Patches", "DebugMode", 0, iniPath) != 0;
+        tData->bDebugMode = GetPrivateProfileIntA("Debug", "DebugMode", 0, iniPath) != 0;
         tData->bCameraPatch = GetPrivateProfileIntA("Patches", "CameraPatch", 1, iniPath) != 0;
+        tData->bEnforceCamPatch = GetPrivateProfileIntA("Debug", "enforceCamPatch", 0, iniPath) != 0;
         tData->fMinHeight = static_cast<float>(GetPrivateProfileIntA("Patches", "minHeight", 750, iniPath));
         tData->fMaxHeight = static_cast<float>(GetPrivateProfileIntA("Patches", "maxHeight", 1200, iniPath));
         tData->fZoomStepBig = static_cast<float>(GetPrivateProfileIntA("Patches", "zoomStep_big", 50, iniPath));
