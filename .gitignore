@@ -8,8 +8,11 @@ premake*
 *.pdb
 *.lib
 *.yml
+*.ipdb
+*.iobj
 
 .vs/
 build/
 Release/
 source/SHOW*
+source/Soldiers-*
