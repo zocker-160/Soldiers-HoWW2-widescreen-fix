@@ -110,7 +110,12 @@ int MainEntry(threadData* tData) {
     }
 
     /* fix for "Texture or surface size is too big (esurface.cpp, 129)"  */
-    int newResLimit = 4096;
+    int newResLimit;
+    if (tData->bSuperUltrawide)
+        newResLimit = 5121;
+    else
+        newResLimit = 4096;
+
     int* textureLimit_p = (int*)(calcAddress(TextureResolutionLimit));
 
     showMessage(*textureLimit_p);

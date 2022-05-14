@@ -18,6 +18,7 @@ struct threadData {
 	bool bDebugMode;
     bool bCameraPatch;
     bool bEnforceCamPatch;
+    bool bSuperUltrawide;
     float fMinHeight;
     float fMaxHeight;
     float fZoomStepBig;
