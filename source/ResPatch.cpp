@@ -134,7 +134,7 @@ int MainEntry(threadData* tData) {
 
     showMessage(*textureLimit_p);
 
-    if (!tData->bCameraPatch || getAspectRatio() < calcAspectRatio(16, 9)) {
+    if ( !tData->bCameraPatch || (getAspectRatio() < calcAspectRatio(16, 9) && !tData->bEnforceCamPatch) ) {
         showMessage("ignoring camera patch and exit");
         return 0;
     }
