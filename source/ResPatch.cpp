@@ -1,11 +1,12 @@
 /*
- * Widescreen patch for Soldiers: Heroes of World War 2 by zocker_160
+ * Widescreen patch for Soldiers: Heroes of World War II by zocker_160
  *
- * This source code is licensed under GPL-v3
+ * This source code is licensed under GPLv3
  *
  */
+
+#include "pch.h"
 #include "ResPatch.h"
-#include <Windows.h>
 #include <iostream>
 #include <sstream>
 
@@ -109,7 +110,12 @@ int MainEntry(threadData* tData) {
     }
 
     /* fix for "Texture or surface size is too big (esurface.cpp, 129)"  */
-    int newResLimit = 4096;
+    int newResLimit;
+    if (tData->bSuperUltrawide)
+        newResLimit = 8192;
+    else
+        newResLimit = 4096;
+
     int* textureLimit_p = (int*)(calcAddress(TextureResolutionLimit));
 
     showMessage(*textureLimit_p);
@@ -133,7 +139,7 @@ int MainEntry(threadData* tData) {
 
     showMessage(*textureLimit_p);
 
-    if (!tData->bCameraPatch || getAspectRatio() < calcAspectRatio(16, 9)) {
+    if ( !tData->bCameraPatch || (getAspectRatio() < calcAspectRatio(16, 9) && !tData->bEnforceCamPatch) ) {
         showMessage("ignoring camera patch and exit");
         return 0;
     }
