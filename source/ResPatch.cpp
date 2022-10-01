@@ -136,7 +136,7 @@ int MainEntry(threadData* tData) {
             showMessage("Patching resolution limit for editor...");
             writeBytes(textureLimitEditor_p, &newResLimit, 4);
             bPatched = true;
-            break;
+            return 0; // editor does not need camera patch
         }
 
         showMessage("Unexpected value - retrying...");
