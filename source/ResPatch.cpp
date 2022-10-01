@@ -10,7 +10,9 @@
 #include <iostream>
 #include <sstream>
 
-DWORD TextureResolutionLimit = 0xE79F6;
+DWORD TResLimit = 0xE79F6;
+DWORD TResLimitEditor = 0x1D1C46;
+
 DWORD CameraMaxH = 0x4FEDF4; // 100000 if not init
 DWORD CameraMinH = 0x4FEDF0; // 1 if not init
 DWORD CameraZoomStepBig = 0x46576C;
@@ -116,25 +118,34 @@ int MainEntry(threadData* tData) {
     else
         newResLimit = 4096;
 
-    int* textureLimit_p = (int*)(calcAddress(TextureResolutionLimit));
+    int* textureLimit_p = (int*)calcAddress(TResLimit);
+    int* textureLimitEditor_p = (int*)calcAddress(TResLimitEditor);
 
     showMessage(*textureLimit_p);
 
     // wait until value can be written (fix for Steam version)
+    bool bPatched = false;
     for (int i = 0; i < RETRY_COUNT; i++) {
-        if (*textureLimit_p != 2048) {
-            showMessage("Unexpected value - retrying...");
-            Sleep(200);
-            if (i - 1 == RETRY_COUNT) {
-                showMessage("Resolution limit could not be set - exiting");
-                return 0;
-            }
-
-        } else {
-            showMessage("Patching resolution limit...");
+        if (*textureLimit_p == 2048) {
+            showMessage("Patching resolution limit for game...");
             writeBytes(textureLimit_p, &newResLimit, 4);
+            bPatched = true;
             break;
         }
+        if (*textureLimitEditor_p == 2048) {
+            showMessage("Patching resolution limit for editor...");
+            writeBytes(textureLimitEditor_p, &newResLimit, 4);
+            bPatched = true;
+            break;
+        }
+
+        showMessage("Unexpected value - retrying...");
+        Sleep(200);
+    }
+
+    if (!bPatched) {
+        showMessage("Resolution limit could not be set - exiting");
+        return 0;
     }
 
     showMessage(*textureLimit_p);
