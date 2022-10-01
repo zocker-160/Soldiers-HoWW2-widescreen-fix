@@ -30,8 +30,7 @@ Widescreen and Resolution fix for Soldiers: Heroes of World War 2.
     
 ## Known Limitations
 
-- videos might only play sound - no idea why :(
-- when the patched `d3d8.dll` is in the game folder, the editor will crash
+- videos might only play sound with black screen - no idea why :(
 
 ## Showcase
 ### Main Menu
