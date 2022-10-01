@@ -25,7 +25,7 @@ struct threadData {
 };
 
 const int version_maj = 1;
-const int version_min = 6;
+const int version_min = 7;
 
 const int RETRY_COUNT = 20;
 
