@@ -6,13 +6,8 @@
  */
 
 #pragma once
-#include "pch.h"
 
-struct memoryPTR {
-    DWORD base_address;
-    int total_offsets;
-    int offsets[];
-};
+#include <Windows.h>
 
 struct threadData {
 	bool bDebugMode;
@@ -25,7 +20,7 @@ struct threadData {
 };
 
 const int version_maj = 1;
-const int version_min = 7;
+const int version_min = 8;
 
 const int RETRY_COUNT = 20;
 

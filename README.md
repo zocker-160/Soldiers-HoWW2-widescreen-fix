@@ -20,7 +20,7 @@ Widescreen and Resolution fix for Soldiers: Heroes of World War 2.
 ## Supported Versions
 
 - [Zoom-Platform](https://www.zoom-platform.com/product/soldiers-heroes-of-world-war-ii)[^1] `1.28.3E`
-    - `soldiers.exe` SHA256 `C46DBEF054FCFB9D0EE5DF2145763E1A0EA3FCB684DF4892F1E63C48A5B5D951`
+    - `soldiers.exe` SHA256 `c46dbef054fcfb9d0ee5df2145763e1a0ea3fcb684df4892f1e63c48a5b5d951`
 - GOG `1.28.3E`
     - `Soldiers.exe` SHA256 `c46dbef054fcfb9d0ee5df2145763e1a0ea3fcb684df4892f1e63c48a5b5d951`
 	- `soldiers_editor.exe` SHA256 `be404895472ecb2a33ae6e110a0cba17ddce9aad1fe9cb311cbd5d05e0356be9`
