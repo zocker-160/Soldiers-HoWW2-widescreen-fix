@@ -40,7 +40,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         std::string checksum;
         if (!getFileChecksum(mainExecutable, checksum)) {
             logger.error("failed to calculate checksum");
-            return 0;
+            return FALSE;
         }
 
         bool supportedVersion = checksum == V_GOG || checksum == V_GOG_EDITOR 
@@ -48,8 +48,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             || checksum == V_STEAM;
 
         if (!supportedVersion) {
-            logger.error("unsupported game version / bailing out");
-            return 0;
+            logger.error("unsupported game version - bailing out");
+            return FALSE;
         }
 
         char iniPath[MAX_PATH];
